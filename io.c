@@ -1,10 +1,12 @@
 #include "io.h"
+
 extern unsigned int matrix[4][4];
 extern unsigned int score, totalScore;
+
 void printNumber(int number)
 {
-	int temp = number;
-	int numberOfDigits = 0;
+	int temp = number;	//临时存放需要计算位数的数字 
+	int numberOfDigits = 0;	//数字位数 
 	
 	//计算数字位数 
 	while(temp)
@@ -22,17 +24,18 @@ void printNumber(int number)
 			printf("   %d   ", number);
 			break;
 		case 2:
-			printf("  %d %d  ", number/10, number%10);
+			printf("  %d %d  ", number/10, number%10);	//取数字的各个位数 
 			break;
 		case 3:
 			printf("  %d  ", number);
 			break;
 		case 4:
-			printf("%d %d %d %d", number/1000, number/100%10, number/10%10, number%10);
+			printf("%d %d %d %d", number/1000, number/100%10, number/10%10, number%10);	//取数字的各个位数 
 			break;
 	}
 }
-void printUI()
+
+void printUI(void)
 {
 	unsigned int i, j;
 	system("cls");
@@ -43,7 +46,7 @@ void printUI()
 		printf("|");
 		for(j=0; j<4; j++)
 		{
-			printNumber(matrix[i][j]);
+			printNumber(matrix[i][j]);	//将矩阵的各行各列输出 
 			printf("|");
 		}
 		printf("\n");
