@@ -1,4 +1,4 @@
-#include "io.h"
+#include "headers/io.h"
 
 extern unsigned int matrix[4][4];
 extern unsigned int score, totalScore;

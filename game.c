@@ -30,3 +30,113 @@ void generateNumber(int frequency)
 		matrix[x][y] = number; 
 	}
 }
+
+void moveNumber(enum directions direction)
+{
+	int container[4];	//存放数字的队列数组 
+	unsigned int i, j, k, flag;	//flag表示队列中下一个数的位置 
+	
+	switch(direction)
+	{
+		case up:	//键盘按 上方向键 
+			for(j=0; j<4; j++)	//从左到右遍历每一列 
+			{
+				flag = 0;	//队列中下一个数的位置归零 
+				memset(container, 0, sizeof(container));	//清空队列数组 
+				for(i=0; i<4; i++)	//从上到下 
+				{
+					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
+					{
+						container[flag] = matrix[i][j];
+						flag++;
+					}
+				}
+				//重新生成该列 
+				for(i=0; i<flag; i++)
+				{
+					matrix[i][j] = container[i];
+				}
+				for(i=flag; i<4; i++)
+				{
+					matrix[i][j] = 0;
+				}
+			}
+			break; 
+			
+		case down:	//键盘按 下方向键 
+			for(j=0; j<4; j++)	//从左到右遍历每一列 
+			{
+				flag = 0;	//队列中下一个数的位置归零 
+				memset(container, 0, sizeof(container));	//清空队列数组 
+				for(i=0; i<4; i++)	//从上到下 
+				{
+					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
+					{
+						container[flag] = matrix[i][j];
+						flag++;
+					}
+				}
+				//重新生成该列 
+				for(i=0; i<=3-flag; i++)
+				{
+					matrix[i][j] = 0;
+				}
+				for(i=4-flag; i<4; i++)
+				{
+					matrix[i][j] = container[i-4+flag];
+				}
+			}
+			break; 
+			
+			case left:	//键盘按 左方向键 
+			for(i=0; i<4; i++)	//从上到下遍历每一行 
+			{
+				flag = 0;	//队列中下一个数的位置归零 
+				memset(container, 0, sizeof(container));	//清空队列数组 
+				for(j=0; j<4; j++)	//从左到右 
+				{
+					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
+					{
+						container[flag] = matrix[i][j];
+						flag++;
+					}
+				}
+				//重新生成该行 
+				for(j=0; j<flag; j++)
+				{
+					matrix[i][j] = container[j];
+				}
+				for(j=flag; j<4; j++)
+				{
+					matrix[i][j] = 0;
+				}
+			}
+			break; 
+			
+			case right:	//键盘按 右方向键 
+			for(i=0; i<4; i++)	//从上到下遍历每一行 
+			{
+				flag = 0;	//队列中下一个数的位置归零 
+				memset(container, 0, sizeof(container));	//清空队列数组 
+				for(j=0; j<4; j++)	//从左到右 
+				{
+					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
+					{
+						container[flag] = matrix[i][j];
+						flag++;
+					}
+				}
+				//重新生成该行 
+				for(j=0; j<=3-flag; j++)
+				{
+					matrix[i][j] = 0;
+				}
+				for(j=4-flag; j<4; j++)
+				{
+					matrix[i][j] = container[j-4+flag];
+				}
+			}
+			break; 
+	}
+	
+} 

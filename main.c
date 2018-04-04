@@ -1,4 +1,3 @@
-#include "headers/standard.h"
 #include "headers/io.h"
 #include "headers/game.h"
 
@@ -8,6 +7,12 @@ unsigned int score, totalScore;
 int main(void)
 {
 	initializeGame();
+	
+	printUI();
+	
+	Sleep(1000);
+	
+	moveNumber(right);
 	
 	printUI();
 	

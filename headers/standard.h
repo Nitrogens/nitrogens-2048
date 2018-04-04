@@ -11,15 +11,19 @@
 #undef false
 #undef bool
 
-#define true 1;
-#define false 0;
+#define true 1
+#define false 0
 
+#ifndef bool
 typedef _Bool bool;
+#endif
 
-enum direction
+#ifndef directions
+enum directions
 {
 	up,
 	right,
 	down,
-	left
+	left 
 };
+#endif
