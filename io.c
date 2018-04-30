@@ -40,11 +40,11 @@ void printUI(void)
 	unsigned int i, j;
 	system("cls");
 	printf("+-------+-------+-------+-------+\n");
-	for(i=0; i<4; i++)
+	for(i = 0; i < 4; i++)
 	{
 		printf("|       |       |       |       |\n");
 		printf("|");
-		for(j=0; j<4; j++)
+		for(j = 0; j < 4; j++)
 		{
 			printNumber(matrix[i][j]);	//将矩阵的各行各列输出 
 			printf("|");

@@ -15,7 +15,7 @@ void generateNumber(int frequency)
 	
 	srand(time(NULL));	//设置随机数种子
 	
-	for(i=0; i<frequency; i++)
+	for(i = 0; i < frequency; i++)
 	{
 		x = rand() % 3;	//生成0~3的随机数 
 		y = rand() % 3;
@@ -31,19 +31,22 @@ void generateNumber(int frequency)
 	}
 }
 
-void moveNumber(enum directions direction)
+void moveAndMergeNumber(enum directions direction)
 {
-	int container[4];	//存放数字的队列数组 
-	unsigned int i, j, k, flag;	//flag表示队列中下一个数的位置 
+	int container[4];	//存放移动后数字的队列数组 
+	int containerAfterMerge[4];	//存放合并后数字的队列数组 
+	int i, j, k, flag, flagAfterMerge;	//flag和flagAfterMerge分别表示 移动后数字的队列 和 合并后数字的队列 中下一个数的位置 
 	
 	switch(direction)
 	{
 		case up:	//键盘按 上方向键 
-			for(j=0; j<4; j++)	//从左到右遍历每一列 
+			for(j = 0; j < 4; j++)	//从左到右遍历每一列 
 			{
 				flag = 0;	//队列中下一个数的位置归零 
+				flagAfterMerge = 0;	//队列中下一个数的位置归零 
 				memset(container, 0, sizeof(container));	//清空队列数组 
-				for(i=0; i<4; i++)	//从上到下 
+				memset(containerAfterMerge, 0, sizeof(containerAfterMerge));	//清空队列数组 
+				for(i = 0; i < 4; i++)	//从上到下 
 				{
 					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
 					{
@@ -51,12 +54,28 @@ void moveNumber(enum directions direction)
 						flag++;
 					}
 				}
-				//重新生成该列 
-				for(i=0; i<flag; i++)
+				
+				//开始合并操作 
+				for(i = 0; i < flag; i++)
 				{
-					matrix[i][j] = container[i];
+					if(i + 1 < flag && container[i] == container[i + 1] && container[i] != 0)	//发现相同的数字 
+					{
+						containerAfterMerge[flagAfterMerge] = container[i] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						i++;
+					}
+					else
+					{
+						containerAfterMerge[flagAfterMerge] = container[i];	//不满足合并条件，则将原数原样加入到 合并后数字的队列数组 中 
+					}
+					flagAfterMerge++;
 				}
-				for(i=flag; i<4; i++)
+				
+				//重新生成该列 
+				for(i = 0; i < flagAfterMerge; i++)
+				{
+					matrix[i][j] = containerAfterMerge[i];
+				}
+				for(i = flagAfterMerge; i < 4; i++)
 				{
 					matrix[i][j] = 0;
 				}
@@ -64,11 +83,13 @@ void moveNumber(enum directions direction)
 			break; 
 			
 		case down:	//键盘按 下方向键 
-			for(j=0; j<4; j++)	//从左到右遍历每一列 
+			for(j = 0; j < 4; j++)	//从左到右遍历每一列 
 			{
 				flag = 0;	//队列中下一个数的位置归零 
+				flagAfterMerge = 0;	//队列中下一个数的位置归零 
 				memset(container, 0, sizeof(container));	//清空队列数组 
-				for(i=0; i<4; i++)	//从上到下 
+				memset(containerAfterMerge, 0, sizeof(containerAfterMerge));	//清空队列数组 
+				for(i = 3; i >= 0; i--)	//从下到上 
 				{
 					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
 					{
@@ -76,24 +97,42 @@ void moveNumber(enum directions direction)
 						flag++;
 					}
 				}
+				 
+				//开始合并操作 
+				for(i = 0; i < flag; i++)
+				{
+					if(i + 1 < flag && container[i] == container[i + 1] && container[i] != 0)	//发现相同的数字 
+					{
+						containerAfterMerge[flagAfterMerge] = container[i] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						i++;
+					}
+					else
+					{
+						containerAfterMerge[flagAfterMerge] = container[i];	//不满足合并条件，则将原数原样加入到 合并后数字的队列数组 中 
+					}
+					flagAfterMerge++;
+				}
+				 
 				//重新生成该列 
-				for(i=0; i<=3-flag; i++)
+				for(i = 0; i < 4 - flagAfterMerge; i++)
 				{
 					matrix[i][j] = 0;
 				}
-				for(i=4-flag; i<4; i++)
+				for(i = 4 - flagAfterMerge; i < 4; i++)
 				{
-					matrix[i][j] = container[i-4+flag];
+					matrix[i][j] = containerAfterMerge[3 - i];
 				}
 			}
 			break; 
 			
 			case left:	//键盘按 左方向键 
-			for(i=0; i<4; i++)	//从上到下遍历每一行 
+			for(i = 0; i < 4; i++)	//从上到下遍历每一行 
 			{
 				flag = 0;	//队列中下一个数的位置归零 
+				flagAfterMerge = 0;	//队列中下一个数的位置归零 
 				memset(container, 0, sizeof(container));	//清空队列数组 
-				for(j=0; j<4; j++)	//从左到右 
+				memset(containerAfterMerge, 0, sizeof(containerAfterMerge));	//清空队列数组 
+				for(j = 0; j < 4; j++)	//从左到右 
 				{
 					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
 					{
@@ -101,12 +140,28 @@ void moveNumber(enum directions direction)
 						flag++;
 					}
 				}
-				//重新生成该行 
-				for(j=0; j<flag; j++)
+				
+				//开始合并操作 
+				for(j = 0; j < flag; j++)
 				{
-					matrix[i][j] = container[j];
+					if(j + 1 < flag && container[j] == container[j + 1] && container[j] != 0)	//发现相同的数字 
+					{
+						containerAfterMerge[flagAfterMerge] = container[j] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						j++;
+					}
+					else
+					{
+						containerAfterMerge[flagAfterMerge] = container[j];	//不满足合并条件，则将原数原样加入到 合并后数字的队列数组 中 
+					}
+					flagAfterMerge++;
 				}
-				for(j=flag; j<4; j++)
+				
+				//重新生成该行 
+				for(j = 0; j < flagAfterMerge; j++)
+				{
+					matrix[i][j] = containerAfterMerge[j];
+				}
+				for(j = flagAfterMerge; j < 4; j++)
 				{
 					matrix[i][j] = 0;
 				}
@@ -114,11 +169,13 @@ void moveNumber(enum directions direction)
 			break; 
 			
 			case right:	//键盘按 右方向键 
-			for(i=0; i<4; i++)	//从上到下遍历每一行 
+			for(i = 0; i < 4; i++)	//从上到下遍历每一行 
 			{
 				flag = 0;	//队列中下一个数的位置归零 
+				flagAfterMerge = 0;	//队列中下一个数的位置归零 
 				memset(container, 0, sizeof(container));	//清空队列数组 
-				for(j=0; j<4; j++)	//从左到右 
+				memset(containerAfterMerge, 0, sizeof(containerAfterMerge));	//清空队列数组 
+				for(j = 3; j >= 0; j--)	//从右到左 
 				{
 					if(matrix[i][j] > 0)	//如果存在数字（即非零）就把该数放入队列数组中 
 					{
@@ -126,14 +183,30 @@ void moveNumber(enum directions direction)
 						flag++;
 					}
 				}
+				
+				//开始合并操作 
+				for(j = 0; j < flag; j++)
+				{
+					if(j + 1 < flag && container[j] == container[j + 1] && container[j] != 0)	//发现相同的数字 
+					{
+						containerAfterMerge[flagAfterMerge] = container[j] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						j++;
+					}
+					else
+					{
+						containerAfterMerge[flagAfterMerge] = container[j];	//不满足合并条件，则将原数原样加入到 合并后数字的队列数组 中 
+					}
+					flagAfterMerge++;
+				}
+				 
 				//重新生成该行 
-				for(j=0; j<=3-flag; j++)
+				for(j = 0; j < 4 - flagAfterMerge; j++)
 				{
 					matrix[i][j] = 0;
 				}
-				for(j=4-flag; j<4; j++)
+				for(j = 4 - flagAfterMerge; j < 4; j++)
 				{
-					matrix[i][j] = container[j-4+flag];
+					matrix[i][j] = containerAfterMerge[3 - j];
 				}
 			}
 			break; 

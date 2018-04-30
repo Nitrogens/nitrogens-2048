@@ -24,27 +24,15 @@ void generateNumber(int frequency);
 
 /*
 	* 
-	* Function moveNumber
-	* 用于在按下键盘之后，按照游戏规则移动数字
+	* Function moveAndMergeNumber
+	* 用于在按下键盘之后，按照游戏规则移动及合并数字
 	
 	* @param enum directions direction 方向
 	
 	* @return void
 	
 */
-void moveNumber(enum directions direction);
-
-/*
-	* 
-	* Function mergeNumber
-	* 用于在按下键盘及数字移动之后，按照游戏规则合并数字
-	
-	* @param enum directions direction 方向
-	
-	* @return void
-	
-*/
-void mergeNumber(enum directions direction);
+void moveAndMergeNumber(enum directions direction);
 
 /*
 	* 

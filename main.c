@@ -12,7 +12,7 @@ int main(void)
 	
 	Sleep(1000);
 	
-	moveNumber(right);
+	moveAndMergeNumber(right);
 	
 	printUI();
 	
