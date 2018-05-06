@@ -1,7 +1,7 @@
 #include "headers/io.h"
 
 extern unsigned int matrix[4][4];
-extern unsigned int score, totalScore;
+extern unsigned int score, maxScore, delta;
 
 void printNumber(int number)
 {
@@ -55,6 +55,6 @@ void printUI(void)
 			printf("+-------+-------+-------+-------+\n");
 	}
 	printf("+-------+-------+-------+-------+\n");
-	printf("Score: %u\n", score);
-	printf("Total Score: %u\n", totalScore);
+	printf("得分：%u(+%u)\n", score, delta);
+	printf("最高得分：%u\n", maxScore);
 }

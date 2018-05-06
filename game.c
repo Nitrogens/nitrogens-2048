@@ -1,11 +1,14 @@
 #include "headers/game.h"
 
 extern unsigned int matrix[4][4];
+extern unsigned int score, delta, status;
+extern bool isWin;
 
 void initializeGame()
 {
-	memset(matrix, 0, sizeof(matrix));	//清空矩阵数组并将每个元素初始化为0 
+	memset(matrix, 0, sizeof(matrix));	//清空矩阵数组并将每个元素初始化为0
 	generateNumber(2);	//在随机位置生成两次数字 
+	status = 0;
 }
 
 void generateNumber(int frequency)
@@ -17,9 +20,9 @@ void generateNumber(int frequency)
 	
 	for(i = 0; i < frequency; i++)
 	{
-		x = rand() % 3;	//生成0~3的随机数 
-		y = rand() % 3;
-		number = (rand() % 10 <= 7)?2:4;	//随机生成2或4，设定生成2的概率为0.7 
+		x = rand() % 4;	//生成0~3的随机数 
+		y = rand() % 4;
+		number = (rand() % 10 <= 6)?2:4;	//随机生成2或4，设定生成2的概率为0.7 
 		
 		if(matrix[x][y] != 0)
 		{
@@ -35,7 +38,10 @@ void moveAndMergeNumber(enum directions direction)
 {
 	int container[4];	//存放移动后数字的队列数组 
 	int containerAfterMerge[4];	//存放合并后数字的队列数组 
-	int i, j, k, flag, flagAfterMerge;	//flag和flagAfterMerge分别表示 移动后数字的队列 和 合并后数字的队列 中下一个数的位置 
+	int i, j, flag, flagAfterMerge;	//flag和flagAfterMerge分别表示 移动后数字的队列 和 合并后数字的队列 中下一个数的位置 
+	bool isFail = true;	//标记是否任何方块都未合成 
+	
+	delta = 0;
 	
 	switch(direction)
 	{
@@ -60,7 +66,11 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					if(i + 1 < flag && container[i] == container[i + 1] && container[i] != 0)	//发现相同的数字 
 					{
-						containerAfterMerge[flagAfterMerge] = container[i] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						isFail = false;
+						containerAfterMerge[flagAfterMerge] = container[i] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中
+						if(containerAfterMerge[flagAfterMerge] == 2048)	//出现2048即代表游戏胜利 
+							isWin = true;
+						delta += container[i] * 2;	//加分大小 
 						i++;
 					}
 					else
@@ -79,6 +89,15 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					matrix[i][j] = 0;
 				}
+				
+				//记录状态 
+				if(isFail)
+				{
+					if(status & (1 << 3))
+						status -= (1 << 3);
+				}
+				else
+					status |= (1 << 3);
 			}
 			break; 
 			
@@ -103,7 +122,11 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					if(i + 1 < flag && container[i] == container[i + 1] && container[i] != 0)	//发现相同的数字 
 					{
+						isFail = false;
 						containerAfterMerge[flagAfterMerge] = container[i] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						if(containerAfterMerge[flagAfterMerge] == 2048)	//出现2048即代表游戏胜利 
+							isWin = true;
+						delta += container[i] * 2;	//加分大小 
 						i++;
 					}
 					else
@@ -122,6 +145,15 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					matrix[i][j] = containerAfterMerge[3 - i];
 				}
+				
+				//记录状态 
+				if(isFail)
+				{
+					if(status & (1 << 2))
+						status -= (1 << 2);
+				}
+				else
+					status |= (1 << 2);
 			}
 			break; 
 			
@@ -146,7 +178,11 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					if(j + 1 < flag && container[j] == container[j + 1] && container[j] != 0)	//发现相同的数字 
 					{
+						isFail = false;
 						containerAfterMerge[flagAfterMerge] = container[j] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						if(containerAfterMerge[flagAfterMerge] == 2048)	//出现2048即代表游戏胜利 
+							isWin = true;
+						delta += container[j] * 2;	//加分大小 
 						j++;
 					}
 					else
@@ -165,6 +201,15 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					matrix[i][j] = 0;
 				}
+				
+				//记录状态 
+				if(isFail)
+				{
+					if(status & (1 << 1))
+						status -= (1 << 1);
+				}
+				else
+					status |= (1 << 1);
 			}
 			break; 
 			
@@ -189,7 +234,11 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					if(j + 1 < flag && container[j] == container[j + 1] && container[j] != 0)	//发现相同的数字 
 					{
+						isFail = false;
 						containerAfterMerge[flagAfterMerge] = container[j] * 2;	//将合并后的数字加入到 合并后数字的队列数组 中 
+						if(containerAfterMerge[flagAfterMerge] == 2048)	//出现2048即代表游戏胜利 
+							isWin = true;
+						delta += container[j] * 2;	//加分大小 
 						j++;
 					}
 					else
@@ -208,8 +257,42 @@ void moveAndMergeNumber(enum directions direction)
 				{
 					matrix[i][j] = containerAfterMerge[3 - j];
 				}
+				
+				//记录状态 
+				if(isFail)
+				{
+					if(status & 1)
+						status -= 1;
+				}
+				else
+					status |= 1;
 			}
 			break; 
 	}
 	
+	score += delta;	//根据新合成出的方块的值进行加分 
+	
+} 
+
+bool isFull()
+{
+	int i, j;
+	bool isDone = false;	//标记是否不为空 
+	for(i = 0; i < 4; i++)
+	{
+		for(j = 0; j < 4; j++)
+		{
+			if(matrix[i][j] == 0)	//发现空的格 
+			{
+				isDone = true;
+				break;
+			}
+		}
+		if(isDone)
+			break;
+	}
+	if(!isDone)
+		return true;
+	else
+		return false;
 } 

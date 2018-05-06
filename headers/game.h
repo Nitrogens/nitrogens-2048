@@ -44,14 +44,3 @@ void moveAndMergeNumber(enum directions direction);
 	
 */
 bool isFull();
-
-/*
-	* 
-	* Function isFail 
-	* 用于判断游戏是否失败 
-	
-	* @return bool
-	* true表示失败 
-	
-*/
-bool isFail();
