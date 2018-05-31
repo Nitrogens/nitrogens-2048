@@ -1,20 +1,22 @@
 #include "headers/io.h"
+#include "headers/file.h"
 
 extern unsigned int matrix[4][4];
 extern unsigned int score, maxScore, delta;
+extern struct Node *head, *last;
 
 void printNumber(int number)
 {
-	int temp = number;	//临时存放需要计算位数的数字 
-	int numberOfDigits = 0;	//数字位数 
-	
-	//计算数字位数 
+	int temp = number;	//临时存放需要计算位数的数字
+	int numberOfDigits = 0;	//数字位数
+
+	//计算数字位数
 	while(temp)
 	{
 		numberOfDigits++;
-		temp /= 10;	
+		temp /= 10;
 	}
-	
+
 	switch(numberOfDigits)
 	{
 		case 0:
@@ -24,13 +26,13 @@ void printNumber(int number)
 			printf("   %d   ", number);
 			break;
 		case 2:
-			printf("  %d %d  ", number/10, number%10);	//取数字的各个位数 
+			printf("  %d %d  ", number/10, number%10);	//取数字的各个位数
 			break;
 		case 3:
 			printf("  %d  ", number);
 			break;
 		case 4:
-			printf("%d %d %d %d", number/1000, number/100%10, number/10%10, number%10);	//取数字的各个位数 
+			printf("%d %d %d %d", number/1000, number/100%10, number/10%10, number%10);	//取数字的各个位数
 			break;
 	}
 }
@@ -46,7 +48,7 @@ void printUI(void)
 		printf("|");
 		for(j = 0; j < 4; j++)
 		{
-			printNumber(matrix[i][j]);	//将矩阵的各行各列输出 
+			printNumber(matrix[i][j]);	//将矩阵的各行各列输出
 			printf("|");
 		}
 		printf("\n");
@@ -56,5 +58,56 @@ void printUI(void)
 	}
 	printf("+-------+-------+-------+-------+\n");
 	printf("得分：%u(+%u)\n", score, delta);
-	printf("最高得分：%u\n", maxScore);
+	printf("按S键存档，R键读档\n");
+	printf("按P键存档并退出，按L键直接退出\n");
+}
+
+void printGuidance()
+{
+    system("cls");
+    printf("+-------+-------+-------+-------+\n");
+    printf("|                               |\n");
+    printf("|   2       0       4       8   |\n");
+    printf("|                               |\n");
+    printf("+-------+-------+-------+-------+\n");
+    printf("|       |                       |\n");
+    printf("|   A   |        开始游戏       |\n");
+    printf("|       |                       |\n");
+    printf("+-------+-------+-------+-------+\n");
+    printf("|       |                       |\n");
+    printf("|   B   |         排行榜        |\n");
+    printf("|       |                       |\n");
+    printf("+-------+-------+-------+-------+\n");
+    printf("|       |                       |\n");
+    printf("|   C   |        退出游戏       |\n");
+    printf("|       |                       |\n");
+    printf("+-------+-------+-------+-------+\n");
+    printf("Copyright 2018 Nitrogens(Mingjie XU).\n");
+    printf("Licensed under the MIT License.\n");
+}
+
+void printRankList()
+{
+    Node * iterator;
+
+    system("cls");
+    printf("+--------+----------------+---------+\n");
+    printf("|                                   |\n");
+    printf("|               排行榜              |\n");
+    printf("|                                   |\n");
+    printf("+--------+---------------+----------+\n");
+    printf("|  排名  |      姓名     |   得分   |\n");
+
+    getRankList();
+
+    iterator = head->next;
+
+    while(iterator != head)
+    {
+        printf("+--------+---------------+----------+\n");
+        printf("|%8d|%15s|%10d|\n", iterator->value.rank, iterator->value.name, iterator->value.score);
+        iterator = iterator->next;
+    }
+
+    printf("+--------+---------------+----------+\n");
 }

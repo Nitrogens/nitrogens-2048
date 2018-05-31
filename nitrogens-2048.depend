@@ -1,0 +1,41 @@
+# depslib dependency file v1.0
+1527776245 source:e:\c\2048\nitrogens-2048\file.c
+	"headers/file.h"
+
+1527768482 e:\c\2048\nitrogens-2048\headers\file.h
+	"standard.h"
+	"linkedList.h"
+
+1527754161 e:\c\2048\nitrogens-2048\headers\standard.h
+	<stdio.h>
+	<stdlib.h>
+	<time.h>
+	<string.h>
+	<conio.h>
+	<stdbool.h>
+
+1525613777 source:e:\c\2048\nitrogens-2048\game.c
+	"headers/game.h"
+
+1527745684 e:\c\2048\nitrogens-2048\headers\game.h
+	"standard.h"
+
+1527775563 source:e:\c\2048\nitrogens-2048\io.c
+	"headers/io.h"
+	"headers/file.h"
+
+1527770443 e:\c\2048\nitrogens-2048\headers\io.h
+	"standard.h"
+
+1527769151 source:e:\c\2048\nitrogens-2048\linkedlist.c
+	"headers/linkedList.h"
+
+1527768215 e:\c\2048\nitrogens-2048\headers\linkedlist.h
+	"standard.h"
+
+1527776144 source:e:\c\2048\nitrogens-2048\main.c
+	"headers/io.h"
+	"headers/game.h"
+	"headers/file.h"
+	"headers/standard.h"
+
