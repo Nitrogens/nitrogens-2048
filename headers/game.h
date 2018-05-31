@@ -1,5 +1,15 @@
 #include "standard.h"
 
+#ifndef directions
+enum directions
+{
+	up,
+	right,
+	down,
+	left 
+};
+#endif
+
 /*
 	* 
 	* Function initializeGame

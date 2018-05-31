@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <conio.h>
 
 #ifndef __cplusplus
 	#include <stdbool.h>
@@ -16,14 +17,4 @@
 
 #ifndef bool
 typedef _Bool bool;
-#endif
-
-#ifndef directions
-enum directions
-{
-	up,
-	right,
-	down,
-	left 
-};
 #endif
