@@ -12,7 +12,7 @@ unsigned int matrix[4][4];
 	maxScore用于存储最高分数
 	dalta存储本回合的得分
 */
-unsigned int score, maxScore, delta, status;
+unsigned int score, delta, status;
 
 //标记是否胜利
 bool isWin = false;
