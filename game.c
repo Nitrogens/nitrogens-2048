@@ -8,9 +8,11 @@ void initializeGame()
 {
 	memset(matrix, 0, sizeof(matrix));	//清空矩阵数组并将每个元素初始化为0
 	generateNumber(2);	//在随机位置生成两次数字
+	//初始化游戏参数
 	status = 0;
 	score = 0;
 	delta = 0;
+	isWin = false;
 }
 
 void generateNumber(int frequency)
