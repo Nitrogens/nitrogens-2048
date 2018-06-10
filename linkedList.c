@@ -24,16 +24,19 @@ void linkedListInsert(dataType value, Node * position)
     position->next = x;
     //更新末端指针
     if(position == last)
+    {
         last = x;
+        head->prev = last;
+    }
 }
 
 void linkedListDelete(Node *target)
 {
-	//不能删除头节点
-    if(target == head)
-        return;
     if(target == last)
+    {
         last = target->prev;
+        head->prev = last;
+    }
     target->prev->next = target->next;
     target->next->prev = target->prev;
     free(target);
@@ -48,7 +51,6 @@ void linkedListClear()
         iterator = iterator->next;
         linkedListDelete(iterator->prev);
     }
-    linkedListDelete(last);
     linkedListDelete(head);
 }
 

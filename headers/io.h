@@ -43,3 +43,14 @@ void printGuidance();
 */
 
 void printRankList();
+
+/*
+	*
+	* Function printInstruction
+	* 用于输出游戏说明
+
+	* @return void
+
+*/
+
+void printInstruction();

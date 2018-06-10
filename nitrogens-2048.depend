@@ -14,17 +14,17 @@
 	<conio.h>
 	<stdbool.h>
 
-1525613777 source:e:\c\2048\nitrogens-2048\game.c
+1527916072 source:e:\c\2048\nitrogens-2048\game.c
 	"headers/game.h"
 
 1527745684 e:\c\2048\nitrogens-2048\headers\game.h
 	"standard.h"
 
-1527776480 source:e:\c\2048\nitrogens-2048\io.c
+1527918892 source:e:\c\2048\nitrogens-2048\io.c
 	"headers/io.h"
 	"headers/file.h"
 
-1527770443 e:\c\2048\nitrogens-2048\headers\io.h
+1527918314 e:\c\2048\nitrogens-2048\headers\io.h
 	"standard.h"
 
 1527769151 source:e:\c\2048\nitrogens-2048\linkedlist.c
@@ -33,7 +33,7 @@
 1527768215 e:\c\2048\nitrogens-2048\headers\linkedlist.h
 	"standard.h"
 
-1527857796 source:e:\c\2048\nitrogens-2048\main.c
+1527918364 source:e:\c\2048\nitrogens-2048\main.c
 	"headers/io.h"
 	"headers/game.h"
 	"headers/file.h"

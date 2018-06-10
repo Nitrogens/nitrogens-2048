@@ -129,6 +129,13 @@ int main(void)
                 break;
 
                 case 99:
+                    printInstruction();
+                    printf("请按任意键继续：");
+                    //等待按键
+                    if(getch());
+                break;
+
+                case 100:
                     return 0;
                 break;
             }
